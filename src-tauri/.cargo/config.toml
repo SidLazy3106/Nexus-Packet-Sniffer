@@ -1,0 +1,4 @@
+# Location of wpcap.lib from the Npcap SDK (https://npcap.com/#download), needed at BUILD time only.
+# Override by setting LIBPCAP_LIBDIR in your environment. End users only need the Npcap runtime.
+[env]
+LIBPCAP_LIBDIR = { value = "C:/Npcap-SDK/Lib/x64", force = false }

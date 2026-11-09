@@ -1,0 +1,61 @@
+// Plain-language explanations for decoded fields, keyed by "Layer.Field" with a field-only fallback.
+
+const BY_LAYER: Record<string, string> = {
+  'Ethernet II.Destination': 'MAC address of the next device on this local link that should receive the frame. Not the final destination across routers.',
+  'Ethernet II.Source': 'MAC address of the interface that sent this frame onto the local link.',
+  'Ethernet II.Type': 'Identifies the protocol carried in the frame payload (0x0800 IPv4, 0x86DD IPv6, 0x0806 ARP).',
+  'IPv4.Version': 'IP version. Always 4 for IPv4.',
+  'IPv4.Header length': 'Length of the IPv4 header in bytes (IHL x 4). 20 bytes unless IP options are present.',
+  'IPv4.DSCP/ECN': 'Differentiated Services code point (traffic class for QoS) and Explicit Congestion Notification bits.',
+  'IPv4.Total length': 'Size of the IP packet (header + data) in bytes as claimed by the sender. Ethernet padding is not included.',
+  'IPv4.Identification': 'Value that groups the fragments of one original datagram so the receiver can reassemble them.',
+  'IPv4.Flags': "Don't Fragment forbids routers from fragmenting; More Fragments is set on every fragment except the last.",
+  'IPv4.Fragment offset': 'Position of this fragment in the original datagram, in bytes (stored in 8-byte units).',
+  'IPv4.TTL': 'Time To Live: decremented by every router; the packet is discarded at zero. Initial values (64, 128, 255) hint at the sender OS, and the current value at the hop distance.',
+  'IPv4.Protocol': 'The transport or control protocol carried inside (6 TCP, 17 UDP, 1 ICMP).',
+  'IPv4.Header checksum': 'Integrity check of the IP header. NEXUS does not validate it because NIC checksum offload often leaves it unset on locally captured outgoing packets.',
+  'IPv4.Source': 'IPv4 address of the sender.',
+  'IPv4.Destination': 'IPv4 address of the intended final recipient.',
+  'IPv6.Traffic class': 'IPv6 equivalent of DSCP/ECN, used for QoS and congestion signalling.',
+  'IPv6.Flow label': 'Optional label used by routers to keep packets of one flow on the same path.',
+  'IPv6.Payload length': 'Length in bytes of everything after the 40-byte IPv6 header, including extension headers.',
+  'IPv6.Next header': 'Type of the header that follows (an extension header, or a transport protocol such as TCP=6).',
+  'IPv6.Hop limit': 'IPv6 equivalent of TTL: decremented by each router and the packet is dropped at zero.',
+  'TCP.Source port': 'Port of the sending application. Clients normally use a temporary (ephemeral) port.',
+  'TCP.Destination port': 'Port of the receiving service (e.g. 443 HTTPS, 80 HTTP, 22 SSH).',
+  'TCP.Sequence number': "Position of this segment's first data byte in the sender's byte stream. SYN and FIN each consume one sequence number.",
+  'TCP.Acknowledgment number': 'The next sequence number the sender of this segment expects to receive. Only valid when the ACK flag is set.',
+  'TCP.Header length': 'Size of the TCP header in bytes (data offset x 4), including options.',
+  'TCP.Flags': 'SYN opens a connection, ACK acknowledges data, FIN closes gracefully, RST aborts, PSH asks the receiver to deliver data promptly, URG marks urgent data.',
+  'TCP.Window': 'Receive window: how many more bytes the sender of this segment is willing to accept (before window scaling is applied).',
+  'TCP.Checksum': 'Integrity check of header and data. Not validated by NEXUS because of NIC checksum offload.',
+  'TCP.Urgent pointer': 'Offset of urgent data. Only meaningful when URG is set.',
+  'UDP.Source port': 'Port of the sending application.',
+  'UDP.Destination port': 'Port of the receiving service (e.g. 53 DNS, 67/68 DHCP).',
+  'UDP.Length': 'Length of the UDP header plus data in bytes.',
+  'UDP.Checksum': 'Optional integrity check in IPv4. Not validated by NEXUS.',
+  'ICMP.Type': 'Message class: 8 echo request, 0 echo reply, 3 destination unreachable, 11 time exceeded.',
+  'ICMP.Code': 'Refines the type, e.g. for unreachable: which kind of unreachable.',
+  'ICMPv6.Type': 'Message class: 128/129 echo, 1 destination unreachable, 2 packet too big, 133-137 neighbour discovery.',
+  'ARP.Operation': '1 = request (who has this IP?), 2 = reply (this IP is at this MAC).',
+  'ARP.Sender MAC': 'Hardware address of the host sending the ARP message.',
+  'ARP.Sender IP': 'IPv4 address of the host sending the ARP message.',
+  'ARP.Target IP': 'IPv4 address being looked up (request) or the requester being answered (reply).',
+  'DNS.Transaction ID': 'Random number that lets the client match a response to its query.',
+  'DNS.Response code': 'NOERROR (0) success, NXDOMAIN (3) the name does not exist, SERVFAIL (2) the server failed, REFUSED (5) policy rejection.',
+  'DNS.Question': 'The name and record type being asked for (A = IPv4 address, AAAA = IPv6, MX = mail, TXT, etc.).',
+  'DHCP.Message type': 'Discover/Offer/Request/ACK sequence by which a client obtains an IP address lease.',
+}
+
+const BY_FIELD: Record<string, string> = {
+  Options: 'Optional header extensions negotiated between the endpoints.',
+  'Option: MSS': 'Maximum Segment Size: largest TCP payload the sender will accept in one segment.',
+  'Option: Window scale': 'Multiplier applied to the Window field, allowing receive windows larger than 64 KB.',
+  'Option: SACK permitted': 'The sender supports selective acknowledgments for faster loss recovery.',
+  'Option: Timestamps': 'Used to measure round-trip time and protect against old duplicate segments.',
+  VLAN: '802.1Q tag identifying the virtual LAN and priority of the frame.',
+}
+
+export function explainField(layer: string, field: string): string | null {
+  return BY_LAYER[`${layer}.${field}`] ?? BY_FIELD[field] ?? null
+}

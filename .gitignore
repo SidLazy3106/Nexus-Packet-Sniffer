@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Rust build output and generated Tauri schemas
+src-tauri/target
+src-tauri/gen
+
+# Third-party agent skills (restore with: npx skills experimental_install, from skills-lock.json)
+.agents/
+.claude/
+
+# Screenshots show the tester's real network addresses; keep them local
+docs/screenshots/
+
+# Test/coverage artifacts
+coverage/
+*.profraw
