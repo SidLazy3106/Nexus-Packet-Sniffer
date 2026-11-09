@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEXUS - a Windows packet analyzer that shows its evidence</title>
+  <meta name="description" content="NEXUS captures network traffic on Windows, decodes every header, and writes each finding with its evidence, its possible causes and its limits. Open source, local-only.">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:title" content="NEXUS - a Windows packet analyzer that shows its evidence">
+  <meta property="og:description" content="Live capture, header-level decoding, and findings that separate what the packets prove from what might explain it.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/shippori-mincho-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a class="wordmark" href="#top" aria-label="NEXUS, back to top">
+        <svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M24.6 9.4A10.2 10.2 0 1 0 26 17" stroke-width="2.6"/><path d="M23.8 8.4A11 11 0 0 0 9 6.6" stroke-width="1.1" opacity=".55"/></svg>
+        NEXUS
+      </a>
+      <nav class="nav__links" aria-label="Sections">
+        <a href="#packet">The packet</a>
+        <a href="#findings">Findings</a>
+        <a href="#limits">Limits</a>
+        <a class="nav__cta" href="#download">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="scene" aria-hidden="true">
+        <div class="layer layer--glow" data-depth="0.28"></div>
+        <svg class="layer layer--moon" data-depth="0.3" viewBox="0 0 200 200" fill="none" stroke-linecap="round">
+          <circle cx="100" cy="100" r="62" fill="var(--color-moon)" opacity=".2"/>
+          <path d="M152 56.3A68 68 0 1 0 163.9 123.3" stroke="var(--color-moon)" stroke-width="7"/>
+          <path d="M148 52A72 72 0 0 0 52 62" stroke="var(--color-moon)" stroke-width="2" opacity=".5"/>
+        </svg>
+        <svg class="layer" data-depth="0.2" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMax slice"><path class="ridge--far" d="M-40 231Q16 242 44 252Q72 261 100 281Q128 300 156 286Q184 272 212 292Q240 311 268 309Q296 307 324 303Q352 298 380 300Q408 301 436 302Q464 303 492 310Q520 317 548 316Q576 314 604 331Q632 348 660 358Q688 368 716 383Q744 397 772 396Q800 394 828 400Q856 406 884 389Q912 372 940 367Q968 361 996 354Q1024 346 1052 332Q1080 317 1108 318Q1136 319 1164 311Q1192 302 1220 299Q1248 295 1276 308Q1304 321 1332 313Q1360 305 1388 309Q1416 313 1444 309Q1472 304 1500 301Q1528 298 1556 279Q1584 259 1612 253L1640 247V760H-40Z"/></svg>
+        <div class="layer layer--mist layer--mist-a" data-depth="0.15" data-drift="-6"></div>
+        <svg class="layer" data-depth="0.1" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMax slice"><path class="ridge--mid" d="M-40 367Q8 364 32 364Q56 363 80 382Q104 400 128 397Q152 393 176 396Q200 399 224 398Q248 396 272 405Q296 413 320 408Q344 403 368 403Q392 402 416 405Q440 408 464 404Q488 400 512 403Q536 406 560 420Q584 433 608 431Q632 429 656 436Q680 442 704 451Q728 459 752 464Q776 468 800 482Q824 496 848 490Q872 483 896 477Q920 471 944 467Q968 463 992 446Q1016 429 1040 421Q1064 413 1088 407Q1112 401 1136 410Q1160 418 1184 408Q1208 397 1232 397Q1256 397 1280 405Q1304 413 1328 419Q1352 425 1376 417Q1400 408 1424 414Q1448 419 1472 401Q1496 383 1520 381Q1544 379 1568 374Q1592 368 1616 360L1640 351V760H-40Z"/></svg>
+        <div class="layer layer--mist layer--mist-b" data-depth="0.06" data-drift="7"></div>
+        <svg class="layer" data-depth="0" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMax slice"><path class="ridge--near" d="M-40 498Q0 487 20 491Q40 494 60 507Q80 519 100 520Q120 520 140 513Q160 505 180 517Q200 528 220 526Q240 524 260 521Q280 518 300 527Q320 536 340 524Q360 512 380 520Q400 527 420 528Q440 529 460 524Q480 518 500 528Q520 537 540 540Q560 542 580 542Q600 542 620 547Q640 551 660 554Q680 556 700 562Q720 567 740 575Q760 582 780 582Q800 582 820 587Q840 591 860 585Q880 579 900 574Q920 568 940 562Q960 555 980 554Q1000 552 1020 551Q1040 550 1060 545Q1080 540 1100 533Q1120 526 1140 522Q1160 518 1180 518Q1200 517 1220 519Q1240 520 1260 521Q1280 521 1300 527Q1320 533 1340 530Q1360 526 1380 528Q1400 530 1420 524Q1440 518 1460 516Q1480 513 1500 510Q1520 507 1540 502Q1560 496 1580 501Q1600 506 1620 497L1640 488V760H-40Z"/></svg>
+        <svg class="layer layer--reeds" data-depth="-0.1" viewBox="0 0 1600 260" preserveAspectRatio="xMidYMax slice">
+          <path class="reed" stroke-width="3" d="M70 260C74 190 82 120 118 52"/>
+          <path class="reed" stroke-width="2.2" d="M98 260C100 200 116 150 150 108"/>
+          <path class="reed" stroke-width="2" d="M44 260C46 210 40 160 22 112"/>
+          <path class="reed" stroke-width="3" d="M1488 260C1482 196 1470 130 1432 66"/>
+          <path class="reed" stroke-width="2.2" d="M1518 260C1514 206 1534 150 1566 124"/>
+          <path class="reed" stroke-width="2" d="M1456 260C1456 214 1444 172 1410 130"/>
+        </svg>
+      </div>
+
+      <div class="container hero__copy">
+        <h1 id="hero-title">NEXUS claims only what the packets prove.</h1>
+        <p class="hero__lead">A Windows packet analyzer that shows its evidence.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer/releases/latest">Download for Windows</a>
+          <a class="btn" href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer">Read the source</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section packet" id="packet" aria-labelledby="packet-title">
+      <div class="container">
+        <div class="packet__head">
+          <h2 id="packet-title">A 287-byte packet, taken apart one layer at a time</h2>
+          <p class="section__lead">Packet 13 of the sample capture. In the app every field is clickable and lights up its bytes.</p>
+        </div>
+
+        <div class="stack" role="group" aria-label="The layers of one captured packet">
+          <article class="layer-card">
+            <div>
+              <h3>Ethernet II</h3>
+              <p class="size">14 bytes</p>
+              <p class="hex">02 00 00 00 00 10  02 00 00 00 00 01  08 00</p>
+            </div>
+            <dl>
+              <dt>Destination</dt><dd>02:00:00:00:00:10</dd>
+              <dt>Source</dt><dd>02:00:00:00:00:01</dd>
+              <dt>Carries</dt><dd>IPv4 (0x0800)</dd>
+            </dl>
+          </article>
+
+          <article class="layer-card">
+            <div>
+              <h3>IPv4</h3>
+              <p class="size">20 bytes</p>
+              <p class="hex">45 00 01 11 c7 46 40 00 40 06 00 00 c6 33 64 2d c0 00 02 0a</p>
+            </div>
+            <dl>
+              <dt>Source</dt><dd>198.51.100.45</dd>
+              <dt>Destination</dt><dd>192.0.2.10</dd>
+              <dt>Total length</dt><dd>273 bytes</dd>
+              <dt>TTL</dt><dd>64</dd>
+              <dt>Protocol</dt><dd>TCP (6)</dd>
+              <dt>Flags</dt><dd>Don’t Fragment</dd>
+            </dl>
+            <p class="note">The checksum is shown, not judged: network cards fill it in late, so local captures often hold unfinished ones.</p>
+          </article>
+
+          <article class="layer-card">
+            <div>
+              <h3>TCP</h3>
+              <p class="size">20 bytes</p>
+              <p class="hex">01 bb c3 50 37 65 95 35 35 bd 18 ad 50 18 fa f0 00 00 00 00</p>
+            </div>
+            <dl>
+              <dt>Source port</dt><dd>443</dd>
+              <dt>Destination port</dt><dd>50000</dd>
+              <dt>Flags</dt><dd>PSH, ACK</dd>
+              <dt>Sequence</dt><dd>929,404,213</dd>
+              <dt>Acknowledgment</dt><dd>901,585,069</dd>
+              <dt>Window</dt><dd>64,240</dd>
+            </dl>
+          </article>
+
+          <article class="layer-card">
+            <div>
+              <h3>Payload</h3>
+              <p class="size">233 bytes retained</p>
+              <p class="hex">17 03 03 00 e9 6a 7c a6 39 30 b2 41 aa a6 88 2d</p>
+            </div>
+            <dl>
+              <dt>Begins with</dt><dd>17 03 03, the mark of a TLS record</dd>
+              <dt>Decrypted?</dt><dd>Never</dd>
+            </dl>
+            <p class="note">Payload kept is limited (256 bytes by default) and can be masked. NEXUS never decrypts and never hunts for passwords.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="capture" aria-labelledby="capture-title">
+      <div class="container split">
+        <div class="split__text">
+          <h2 id="capture-title">Live capture that counts what it drops</h2>
+          <p>Capture on any Npcap interface with a BPF filter. When the driver or NEXUS’s own queue falls behind, the loss is counted apart, so a gap in the capture is never mistaken for a network fault.</p>
+        </div>
+        <figure class="frame-wrap">
+          <div class="frame"><img src="assets/img/nexus-overview.jpg" width="1475" height="938" loading="lazy" alt="The NEXUS overview screen showing 2,572 packets from the sample capture, a throughput graph with one burst, a network health score of 60 labelled Degraded, and the protocol mix."></div>
+          <figcaption class="caption">The overview, loaded with the sample capture.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="findings" aria-labelledby="findings-title">
+      <div class="container split split--flip">
+        <figure class="frame-wrap">
+          <div class="frame"><img src="assets/img/nexus-rca.jpg" width="1475" height="938" loading="lazy" alt="The Root Cause Analysis screen: a list of findings on the left and, on the right, a finding about DNS queries without responses with its observed facts, evidence, possible causes and recommended steps."></div>
+          <figcaption class="caption">A finding from the sample capture, opened.</figcaption>
+        </figure>
+        <div class="split__text">
+          <h2 id="findings-title">Findings that show their work</h2>
+          <dl class="anatomy">
+            <div><dt>Observed</dt><dd>What the packets confirm, with the packet numbers.</dd></div>
+            <div><dt>Possible causes</dt><dd>Hypotheses, written as hypotheses.</dd></div>
+            <div><dt>Limits</dt><dd>What a capture from this point cannot tell you.</dd></div>
+          </dl>
+          <blockquote class="quote">
+            3 DNS queries sent to 192.0.2.99 received no matching response in the capture within 5 s. A missing response in a capture is not proof the server never answered.
+            <cite>Text produced by NEXUS for the sample capture</cite>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="measured" aria-labelledby="measured-title">
+      <div class="container split">
+        <div class="split__text">
+          <h2 id="measured-title">Latency is measured between matched packets, or not at all</h2>
+          <p>Handshake legs, ping and reply, DNS query and response, data and its ACK. Each number is marked as measured. Retransmissions are counts, never proof of loss.</p>
+        </div>
+        <figure class="frame-wrap">
+          <div class="frame"><img src="assets/img/nexus-analytics.jpg" width="1475" height="938" loading="lazy" alt="The Traffic Analytics screen with packets-per-second and bandwidth charts, the protocol distribution, and the top sources and destinations from the sample capture."></div>
+          <figcaption class="caption">Every chart is drawn from captured packets, nothing is simulated.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="explorer" aria-labelledby="explorer-title">
+      <div class="container split split--flip">
+        <figure class="frame-wrap">
+          <div class="frame"><img src="assets/img/nexus-explorer.jpg" width="1475" height="938" loading="lazy" alt="The Packet Explorer showing a packet list on the left and the decoded Ethernet and IPv4 header fields of packet 13 on the right."></div>
+          <figcaption class="caption">Packet 13 in the explorer.</figcaption>
+        </figure>
+        <div class="split__text">
+          <h2 id="explorer-title">Decoders written to survive hostile input</h2>
+          <p>Ethernet, VLAN, IPv4, IPv6, TCP, UDP, ICMP, ARP, DNS and DHCP. Every offset is bounds-checked, and every truncation of every test packet decodes without a crash.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section limits" id="limits" aria-labelledby="limits-title">
+      <div class="container">
+        <h2 id="limits-title">What NEXUS does not do, stated plainly</h2>
+        <p class="section__lead">Version 0.1.0 is a first release. These are its edges.</p>
+        <div class="limits__body">
+          
+      <svg class="limits__seam" viewBox="0 0 400 800" preserveAspectRatio="none" aria-hidden="true"><path id="seam" d="M210 0C190 60 236 96 214 160C196 214 160 232 182 300C204 366 250 376 226 450C204 516 170 540 196 610C220 676 238 706 214 800"/></svg>
+        <ul class="limits__list">
+          <li><strong>It needs Npcap for live capture</strong><span>A separate product, not bundled. Importing files works without it.</span></li>
+          <li><strong>It does not decrypt</strong><span>Encrypted payloads stay encrypted. Headers, DNS and DHCP are read.</span></li>
+          <li><strong>It does not reassemble fragments or check checksums</strong><span>Fragments are flagged, not rebuilt. Checksums are unreliable under offload.</span></li>
+          <li><strong>It sees only where it listens</strong><span>Offloads and asymmetric routes can hide or create observations. Each finding says so.</span></li>
+          <li><strong>It captures one interface at a time</strong><span>Windows only, x64 only.</span></li>
+          <li><strong>It is not fully tested yet</strong><span>Not tried on a clean machine or Windows 10. The MSI is untested. No comparison with Wireshark.</span></li>
+        </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="download" aria-labelledby="download-title">
+      <div class="container split">
+        <div class="split__text">
+          <h2 id="download-title">Try it with the sample capture, no network needed</h2>
+          <p>A 3.6 MB per-user installer, no administrator rights needed. It is unsigned, so Windows will ask you to confirm.</p>
+          <div class="actions">
+            <a class="btn btn--primary" href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer/releases/latest">Download NEXUS 0.1.0</a>
+            <a class="btn" href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer/blob/main/samples/nexus-demo.pcap">Get the sample capture</a>
+          </div>
+          <p class="verified">Tested with 125 automated tests, 4 of them on real Npcap, covering about 90% of backend lines. The <a href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer/blob/main/docs/RELEASE_VERIFICATION.md">verification report</a> lists what was not tested.</p>
+        </div>
+        <ol class="steps">
+          <li><div><strong>Install Npcap</strong><span>From npcap.com, for live capture only.</span></div></li>
+          <li><div><strong>Run the NEXUS installer</strong><span>The setup file from the latest release; checksums are listed beside it.</span></div></li>
+          <li><div><strong>Open the sample</strong><span>Import PCAP, then nexus-demo.pcap. It uses only reserved documentation addresses.</span></div></li>
+        </ol>
+      </div>
+    </section>
+    <section class="section" id="feedback" aria-labelledby="feedback-title">
+      <div class="container split">
+        <div class="split__text">
+          <h2 id="feedback-title">Report a problem or an idea</h2>
+          <p>Tell me what broke, what was unclear, or what is missing. I can reply only if you leave an email.</p>
+          <p class="privacy">Messages go to a private database and are used only to reply. This site runs no analytics; the hosts keep ordinary request logs.</p>
+        </div>
+        <form class="form" id="feedback-form" action="/api/feedback" method="post">
+          <div class="field">
+            <label for="fb-kind">What is this?</label>
+            <select id="fb-kind" name="kind" required>
+              <option value="bug">Something broke</option>
+              <option value="idea">An idea</option>
+              <option value="question">A question</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="fb-message">Your message</label>
+            <textarea id="fb-message" name="message" rows="6" maxlength="2000" required></textarea>
+          </div>
+          <div class="field">
+            <label for="fb-email">Email, optional</label>
+            <input id="fb-email" name="email" type="email" maxlength="254" autocomplete="email">
+          </div>
+          <div class="field field--trap" aria-hidden="true">
+            <label for="fb-website">Leave this field empty</label>
+            <input id="fb-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="actions">
+            <button class="btn btn--primary" type="submit">Send message</button>
+            <p class="form__status" id="feedback-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <a class="wordmark" href="#top">NEXUS</a>
+        <nav class="footer__links" aria-label="Project links">
+          <a href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer">Source on GitHub</a>
+          <a href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer/releases">Releases</a>
+          <a href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer/blob/main/docs/ARCHITECTURE.md">Architecture</a>
+          <a href="https://github.com/SidLazy3106/Nexus-Packet-Sniffer/blob/main/LICENSE">MIT licence</a>
+          <a href="#feedback">Send feedback</a>
+          <a href="https://npcap.com/">Npcap</a>
+        </nav>
+      </div>
+      <p class="footer__note">Capture only networks you are authorised to monitor. NEXUS keeps all analysis on your computer. Type: Shippori Mincho and IBM Plex (SIL Open Font Licence). Motion: GSAP.</p>
+    </div>
+  </footer>
+
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="form.js" defer></script>
+</body>
+</html>

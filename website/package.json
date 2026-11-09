@@ -1,0 +1,12 @@
+{
+  "name": "nexus-website",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Static site and feedback function for NEXUS. Deployed to Vercel with this folder as the project root.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "node scripts/dev.cjs",
+    "test": "node --test tests/feedback.test.js"
+  }
+}

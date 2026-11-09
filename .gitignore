@@ -37,3 +37,9 @@ docs/screenshots/
 # Test/coverage artifacts
 coverage/
 *.profraw
+
+# Vercel / local environment
+.vercel
+.env
+.env.*
+!.env.example
