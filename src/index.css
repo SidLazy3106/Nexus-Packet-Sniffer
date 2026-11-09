@@ -1,0 +1,166 @@
+@import "@fontsource-variable/lora/wght.css";
+@import "tailwindcss";
+
+/*
+ * Wabi-sabi: quiet, worn, natural. Three token layers (design-system skill):
+ *   1. primitives  - raw pigments, named after traditional Japanese colours
+ *   2. semantic    - roles (surface, ink, accent, severity)
+ *   3. component   - used by .card / .btn / .input below
+ * Nothing outside this block uses a literal colour; scripts read tokens as var(--…).
+ */
+:root {
+  /* 1. primitives */
+  --sumi-950: #110f0d;   /* ink-stick black, slightly warm */
+  --sumi-900: #171512;
+  --sumi-850: #1d1a16;
+  --sumi-800: #25211c;
+  --sumi-700: #36312a;
+  --sumi-600: #4b453b;
+  --kinari-100: #ece5d6; /* unbleached silk */
+  --kinari-300: #c4bba8;
+  --kinari-500: #9a9280;
+  --aizome-300: #a3b8cc; /* indigo dye, faded */
+  --aizome-400: #8aa3bd;
+  --aizome-600: #4c6480;
+  --aizome-700: #3a4f68;
+  --seiji-400: #9cc0b0;  /* celadon */
+  --koke-400: #a3b27b;   /* moss */
+  --kincha-400: #cfaa5e; /* aged gold / ochre */
+  --kaki-400: #d48e66;   /* persimmon */
+  --akane-400: #d26f5e;  /* madder red */
+  --fuji-400: #ae9fc2;   /* wisteria */
+  --sunairo-400: #a79d84;/* sand */
+
+  /* 2. semantic */
+  --c-bg: var(--sumi-950);
+  --c-surface: var(--sumi-900);
+  --c-raised: var(--sumi-850);
+  --c-inset: var(--sumi-950);
+  --c-line: var(--sumi-700);
+  --c-line-soft: var(--sumi-800);
+  --c-ink: var(--kinari-100);
+  --c-dim: var(--kinari-300);
+  --c-faint: var(--kinari-500);
+  --c-accent: var(--aizome-400);
+  --c-accent-strong: var(--aizome-700);
+  --c-celadon: var(--seiji-400);
+  --c-ok: var(--koke-400);
+  --c-warn: var(--kincha-400);
+  --c-orange: var(--kaki-400);
+  --c-crit: var(--akane-400);
+  --c-wisteria: var(--fuji-400);
+  --c-sand: var(--sunairo-400);
+
+  /* 3. component */
+  --card-bg: var(--c-surface);
+  --card-border: var(--c-line-soft);
+  --btn-bg: var(--c-raised);
+  --btn-bg-hover: var(--sumi-800);
+  --btn-border: var(--c-line);
+  --radius: 6px;
+  --radius-lg: 9px;
+  --ease-quiet: cubic-bezier(.25, .1, .25, 1);
+  --dur: 220ms;
+}
+
+[data-theme="graphite"] {
+  --sumi-950: #0e0f10;
+  --sumi-900: #141516;
+  --sumi-850: #1a1c1d;
+  --sumi-800: #222527;
+  --sumi-700: #33373a;
+  --sumi-600: #464b4f;
+  --kinari-100: #e6e6e1;
+  --kinari-300: #b9bab3;
+  --kinari-500: #92948c;
+}
+
+@theme inline {
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Lora Variable", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-mono: "Cascadia Mono", "Cascadia Code", Consolas, "Courier New", monospace;
+
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-raised: var(--c-raised);
+  --color-line: var(--c-line);
+  --color-line-soft: var(--c-line-soft);
+  --color-ink: var(--c-ink);
+  --color-dim: var(--c-dim);
+  --color-faint: var(--c-faint);
+  --color-accent: var(--c-accent);
+  --color-celadon: var(--c-celadon);
+  --color-ok: var(--c-ok);
+  --color-warn: var(--c-warn);
+  --color-orange: var(--c-orange);
+  --color-crit: var(--c-crit);
+  --color-wisteria: var(--c-wisteria);
+  --color-sand: var(--c-sand);
+}
+
+html, body, #root { height: 100%; }
+html { overflow-x: clip; }
+body {
+  margin: 0;
+  overflow: hidden;
+  overflow-x: clip;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/* A whisper of paper grain: static, behind everything, never interactive. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#root { position: relative; z-index: 1; }
+
+* { scrollbar-width: thin; scrollbar-color: var(--sumi-600) transparent; }
+::selection { background: color-mix(in srgb, var(--c-accent) 35%, transparent); }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+
+h1, h2, .serif { font-family: var(--font-serif); font-weight: 500; letter-spacing: 0; }
+.num { font-variant-numeric: tabular-nums; }
+.kbd-mono { font-family: var(--font-mono); font-size: 12px; }
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 30px; padding: 0 12px; border-radius: var(--radius);
+  border: 1px solid var(--btn-border); background: var(--btn-bg); color: var(--c-ink);
+  cursor: pointer; white-space: nowrap;
+  transition: background-color var(--dur) var(--ease-quiet), border-color var(--dur) var(--ease-quiet), opacity var(--dur) var(--ease-quiet);
+}
+.btn:hover:not(:disabled) { background: var(--btn-bg-hover); border-color: var(--sumi-600); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn-primary { background: var(--c-accent-strong); border-color: var(--aizome-600); color: var(--kinari-100); }
+.btn-primary:hover:not(:disabled) { background: var(--aizome-600); border-color: var(--aizome-400); }
+.btn-danger { background: color-mix(in srgb, var(--c-crit) 16%, var(--c-surface)); border-color: color-mix(in srgb, var(--c-crit) 45%, var(--c-line)); color: var(--c-crit); }
+.btn-danger:hover:not(:disabled) { background: color-mix(in srgb, var(--c-crit) 26%, var(--c-surface)); }
+.input {
+  height: 30px; padding: 0 10px; border-radius: var(--radius); min-width: 0;
+  border: 1px solid var(--c-line); background: var(--c-inset); color: var(--c-ink);
+  transition: border-color var(--dur) var(--ease-quiet);
+}
+.input:focus { border-color: var(--c-accent); outline: none; }
+.input::placeholder { color: var(--c-faint); }
+
+@keyframes breathe { 0%, 100% { opacity: 1 } 50% { opacity: .4 } }
+.pulse { animation: breathe 2.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
