@@ -27,10 +27,6 @@ dist-ssr
 src-tauri/target
 src-tauri/gen
 
-# Third-party agent skills (restore with: npx skills experimental_install, from skills-lock.json)
-.agents/
-.claude/
-
 # Screenshots show the tester's real network addresses; keep them local
 docs/screenshots/
 
@@ -43,3 +39,9 @@ coverage/
 .env
 .env.*
 !.env.example
+
+# Local AI-tool files (keep out of the repo)
+CLAUDE.md
+.claude/
+.agents/
+skills-lock.json
